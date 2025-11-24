@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>RPI-KIOSK</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #controls {
+      position: fixed;
+      display: flex;
+      gap: 10px;
+      z-index: 9999;
+    }
+
+    .vertical {
+      flex-direction: column;
+    }
+
+    .horizontal {
+      flex-direction: row;
+    }
+
+    .top-left    { top: 10px; left: 10px; }
+    .top-right   { top: 10px; right: 10px; }
+    .bottom-left { bottom: 10px; left: 10px; }
+    .bottom-right{ bottom: 10px; right: 10px; }
+
+    .ctrl-btn {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .ctrl-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: #333;
+    }
+
+    .ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+  </style>
+</head>
+<body>
+
+<div id="controls" class="vertical"></div>
+<iframe id="kioskFrame"></iframe>
+
+<script>
+  function getParam(name, fallback) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name) || fallback;
+  }
+
+  const START_URL = getParam("url", "index.html");
+  const TITLE = getParam("title", "RPI-KIOSK");
+  const POSITION = getParam("position", "top-left");
+  const SHOW_HOME = getParam("home", "1") !== "0";
+  const SHOW_CLOSE = getParam("close", "1") !== "0";
+
+  document.title = TITLE;
+
+  const iframe = document.getElementById("kioskFrame");
+  iframe.src = START_URL;
+
+  const controls = document.getElementById("controls");
+  controls.classList.add(POSITION);
+
+  const onlyOne = SHOW_HOME ^ SHOW_CLOSE; // genau einer aktiv
+  if (onlyOne) {
+    controls.classList.remove("bottom-left", "bottom-right");
+    controls.classList.add("top-right");
+  }
+
+  if (SHOW_HOME) {
+    const homeBtn = document.createElement("button");
+    homeBtn.className = "ctrl-btn";
+    homeBtn.title = "Home";
+    homeBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>`;
+    homeBtn.onclick = () => iframe.src = START_URL;
+    controls.appendChild(homeBtn);
+  }
+
+  if (SHOW_CLOSE) {
+    const closeBtn = document.createElement("button");
+    closeBtn.className = "ctrl-btn";
+    closeBtn.title = "Close";
+    closeBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L12 13.41 6.71 19.71 5.3 18.29 10.59 13 5.3 7.71 6.71 6.3 12 11.59l5.29-5.3z"/></svg>`;
+    closeBtn.onclick = () => {
+      window.close();
+      setTimeout(() => {
+        document.body.innerHTML = "<h1 style='text-align:center;'>Please close this window manually.</h1>";
+      }, 300);
+    };
+    controls.appendChild(closeBtn);
+  }
+
+  if (!SHOW_HOME && !SHOW_CLOSE) {
+    controls.style.display = "none";
+  }
+</script>
+
+</body>
+</html>

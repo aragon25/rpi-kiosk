@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RPI-KIOSK - Website Unavailable</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: #fff;
+      color: #213144;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 24px;
+      background: #fff;
+      box-shadow: 0 6px 32px 0 rgba(32,48,64,0.07);
+      border-radius: 24px;
+      padding: 2.5em 1.5em 2em 1.5em;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .logo {
+      width: 140px;
+      height: 140px;
+      margin-bottom: 0.0em;
+      margin-top: 0.0em;
+    }
+    .message {
+      font-size: 1.13em;
+      margin: 0.5em 0 0.7em 0;
+      font-weight: 600;
+      color: #c30000;
+    }
+    .web-name {
+      font-size: 1.07em;
+      margin: 0.7em 0 0.5em 0;
+      color: #294d77;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      background: #eef2f6;
+      border-radius: 8px;
+      display: inline-block;
+      padding: 0.3em 0.9em;
+      font-weight: 600;
+      word-break: break-all;
+    }
+    .sub {
+      font-size: 1.08em;
+      margin-top: 0.5em;
+      color: #333;
+      font-weight: 400;
+    }
+    @media (max-width: 540px) {
+      .container {
+        max-width: 98vw;
+        margin: 8px;
+        padding: 1.2em 0.7em 1.2em 0.7em;
+        border-radius: 16px;
+      }
+      .logo {
+        width: 90px;
+        height: 90px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="24b8b889427f972ecf08a835d09d3eb1.webp" alt="RPI-KIOSK Logo" class="logo">
+    <div class="message">
+      The website is currently unavailable.
+    </div>
+    <div class="web-name" id="site-name">
+      (no site specified)
+    </div>
+    <div class="sub">
+      Please check back later or contact your administrator if the problem persists.
+    </div>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const site = params.get('site');
+    document.getElementById('site-name').textContent = site ? site : "(no site specified)";
+  </script>
+</body>
+</html>

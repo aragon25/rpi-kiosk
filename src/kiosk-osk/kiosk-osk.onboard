@@ -1,0 +1,190 @@
+<?xml version="1.0" ?>
+<keyboard id="kiosk-osk" format="3.2" section="system" summary="Keyboard for Kiosk Systems">
+  <include file="key_defs.xml"/>
+  <box border="0.5" spacing="2.0" orientation="vertical">
+    <!--- word suggestions -->
+    <panel filename="kiosk-osk-alpha.svg">
+      <include file="word_suggestions.xml"/>
+    </panel>
+    <key_template button="true" id="layer0" show_active="false"/>
+    <panel>
+      <box orientation="horizontal">
+        <!-- main keyboard -->
+        <box orientation="vertical" expand="true">
+          <panel>
+            <!-- Cyrillic keymaps-->
+            <panel id="alpha-keys" filename="kiosk-osk-alpha.svg" layer="alpha" layout="ru,ua,by,bg,tj,ge(os),az(cyrillic),mn,mk">
+              <!-- row 5 -->
+              <key group="alphanumeric" id="AE01" keysym="0x31" label="1"/>
+              <key group="alphanumeric" id="AE02" keysym="0x32" label="2"/>
+              <key group="alphanumeric" id="AE03" keysym="0x33" label="3"/>
+              <key group="alphanumeric" id="AE04" keysym="0x34" label="4"/>
+              <key group="alphanumeric" id="AE05" keysym="0x35" label="5"/>
+              <key group="alphanumeric" id="AE06" keysym="0x36" label="6"/>
+              <key group="alphanumeric" id="AE07" keysym="0x37" label="7"/>
+              <key group="alphanumeric" id="AE08" keysym="0x38" label="8"/>
+              <key group="alphanumeric" id="AE09" keysym="0x39" label="9"/>
+              <key group="alphanumeric" id="AE10" keysym="0x30" label="0"/>
+              <!-- row 4 -->
+              <key group="alphanumeric" id="AD01" svg_id="AD01-cyr"/>
+              <key group="alphanumeric" id="AD02" svg_id="AD02-cyr"/>
+              <key group="alphanumeric" id="AD03" svg_id="AD03-cyr"/>
+              <key group="alphanumeric" id="AD04" svg_id="AD04-cyr"/>
+              <key group="alphanumeric" id="AD05" svg_id="AD05-cyr"/>
+              <key group="alphanumeric" id="AD06" svg_id="AD06-cyr"/>
+              <key group="alphanumeric" id="AD07" svg_id="AD07-cyr"/>
+              <key group="alphanumeric" id="AD08" svg_id="AD08-cyr"/>
+              <key group="alphanumeric" id="AD09" svg_id="AD09-cyr"/>
+              <key group="alphanumeric" id="AD10" svg_id="AD10-cyr"/>
+              <key group="alphanumeric" id="AD11" svg_id="AD11-cyr"/>
+              <!-- row 3 -->
+              <key group="alphanumeric" id="AC01" svg_id="AC01-cyr"/>
+              <key group="alphanumeric" id="AC02" svg_id="AC02-cyr"/>
+              <key group="alphanumeric" id="AC03" svg_id="AC03-cyr"/>
+              <key group="alphanumeric" id="AC04" svg_id="AC04-cyr"/>
+              <key group="alphanumeric" id="AC05" svg_id="AC05-cyr"/>
+              <key group="alphanumeric" id="AC06" svg_id="AC06-cyr"/>
+              <key group="alphanumeric" id="AC07" svg_id="AC07-cyr"/>
+              <key group="alphanumeric" id="AC08" svg_id="AC08-cyr"/>
+              <key group="alphanumeric" id="AC09" svg_id="AC09-cyr"/>
+              <key group="alphanumeric" id="AC10" svg_id="AC10-cyr"/>
+              <key group="alphanumeric" id="AC11" svg_id="AC11-cyr" keycode="35" layout="ru,tj,az(cyrillic)"/>
+              <key group="alphanumeric" id="AC11" svg_id="AC11-cyr" keycode="51" layout="ua"/>
+              <key group="alphanumeric" id="AC11" svg_id="AC11-cyr"/>
+              <!-- row 2 -->
+              <key group="shifts" id="LFSH.like_rtrn" svg_id="LFSH-cyr"/>
+              <key group="alphanumeric" id="AB01" svg_id="AB01-cyr"/>
+              <key group="alphanumeric" id="AB02" svg_id="AB02-cyr"/>
+              <key group="alphanumeric" id="AB03" svg_id="AB03-cyr"/>
+              <key group="alphanumeric" id="AB04" svg_id="AB04-cyr"/>
+              <key group="alphanumeric" id="AB05" svg_id="AB05-cyr"/>
+              <key group="alphanumeric" id="AB06" svg_id="AB06-cyr"/>
+              <key group="alphanumeric" id="AB07" svg_id="AB07-cyr"/>
+              <key group="alphanumeric" id="AB08" svg_id="AB08-cyr"/>
+              <key group="alphanumeric" id="AB09" svg_id="AB09-cyr"/>
+              <key group="alphanumeric" id="AB09" svg_id="AB09-cyr"/>
+              <key group="alphanumeric" id="AB10" svg_id="AB10-cyr" keycode="48" layout="ru,ua,tj,az(cyrillic)"/>
+              <key group="alphanumeric" id="AB10" svg_id="AB10-cyr" keycode="49" layout="ge(os)"/>
+              <key group="alphanumeric" id="AB10" svg_id="AB10-cyr" keycode="51" layout="mk"/>
+              <key group="alphanumeric" id="AB10" svg_id="AB10-cyr"/>
+              <key group="bottomrow" id="BKSP" svg_id="BKSP-cyr"/>
+            </panel>
+            <!-- Latin and other keymaps -->
+            <panel id="alpha-keys" filename="kiosk-osk-alpha.svg" layer="alpha">
+              <!-- row 5 -->
+              <key group="alphanumeric" id="AE01" keysym="0x31" label="1"/>
+              <key group="alphanumeric" id="AE02" keysym="0x32" label="2"/>
+              <key group="alphanumeric" id="AE03" keysym="0x33" label="3"/>
+              <key group="alphanumeric" id="AE04" keysym="0x34" label="4"/>
+              <key group="alphanumeric" id="AE05" keysym="0x35" label="5"/>
+              <key group="alphanumeric" id="AE06" keysym="0x36" label="6"/>
+              <key group="alphanumeric" id="AE07" keysym="0x37" label="7"/>
+              <key group="alphanumeric" id="AE08" keysym="0x38" label="8"/>
+              <key group="alphanumeric" id="AE09" keysym="0x39" label="9"/>
+              <key group="alphanumeric" id="AE10" keysym="0x30" label="0"/>
+              <!-- row 4 -->
+              <key group="alphanumeric" id="AD01"/>
+              <key group="alphanumeric" id="AD02"/>
+              <key group="alphanumeric" id="AD03"/>
+              <key group="alphanumeric" id="AD04"/>
+              <key group="alphanumeric" id="AD05"/>
+              <key group="alphanumeric" id="AD06" char="z" label="z" layout="de"/>
+              <key group="alphanumeric" id="AD06"/>
+              <key group="alphanumeric" id="AD07"/>
+              <key group="alphanumeric" id="AD08"/>
+              <key group="alphanumeric" id="AD09"/>
+              <key group="alphanumeric" id="AD10"/>
+              <!-- row 3 -->
+              <key group="alphanumeric" id="AC01"/>
+              <key group="alphanumeric" id="AC02"/>
+              <key group="alphanumeric" id="AC03"/>
+              <key group="alphanumeric" id="AC04"/>
+              <key group="alphanumeric" id="AC05"/>
+              <key group="alphanumeric" id="AC06"/>
+              <key group="alphanumeric" id="AC07"/>
+              <key group="alphanumeric" id="AC08"/>
+              <key group="alphanumeric" id="AC09"/>
+              <key group="alphanumeric" id="AC10" keycode="47" layout="be,fr,cm(azerty)"/>
+              <key group="alphanumeric" id="AC10" char="'" label="'"/>
+              <!-- row 2 -->
+              <key group="shifts" id="LFSH.like_rtrn"/>
+              <key group="alphanumeric" id="AB01" char="y" label="y" layout="de"/>
+              <key group="alphanumeric" id="AB01"/>
+              <key group="alphanumeric" id="AB02"/>
+              <key group="alphanumeric" id="AB03"/>
+              <key group="alphanumeric" id="AB04"/>
+              <key group="alphanumeric" id="AB05"/>
+              <key group="alphanumeric" id="AB06"/>
+              <key group="alphanumeric" id="AB07" char="'" label="'" layout="be,fr,cm(azerty)"/>
+              <key group="alphanumeric" id="AB07"/>
+              <key group="bottomrow" id="BKSP"/>
+            </panel>
+            <panel filename="kiosk-osk-symbols.svg" layer="numbers">
+              <!-- row 5 -->
+              <key group="alphanumeric" id="BE01" char="$" label="$"/>
+              <key group="alphanumeric" id="BE02" label="€" keysym="8364"/>
+              <key group="alphanumeric" id="BE03" label="¥" char="¥"/>
+              <key group="alphanumeric" id="BE04" label="₽" char="₽"/>
+              <key group="alphanumeric" id="BE05" label="£" char="£"/>
+              <key group="alphanumeric" id="BE06" label="&amp;" char="&amp;"/>
+              <key group="alphanumeric" id="BE07" char="§" label="§"/>
+              <key group="alphanumeric" id="BE08" char="^" label="^"/>
+              <key group="alphanumeric" id="BE09" char="`" label="`"/>
+              <key group="alphanumeric" id="BE10" char="°" label="°"/>
+              <!-- row 4 -->
+              <key group="alphanumeric" id="BD01" char="~" label="~"/>
+              <key group="alphanumeric" id="BD02" char="_" label="_"/>
+              <key group="alphanumeric" id="BD03" char="|" label="|"/>
+              <key group="alphanumeric" id="BD04" char="\" label="\"/>
+              <key group="alphanumeric" id="BD05" char="&lt;" label="&lt;"/>
+              <key group="alphanumeric" id="BD06" char="&gt;" label="&gt;"/>
+              <key group="alphanumeric" id="BD07" char="{" label="{"/>
+              <key group="alphanumeric" id="BD08" char="}" label="}"/>
+              <key group="alphanumeric" id="BD09" char="[" label="["/>
+              <key group="alphanumeric" id="BD10" char="]" label="]"/>
+              <!-- row 3 -->
+              <key group="alphanumeric" id="TAB"/>
+              <key group="alphanumeric" id="BC02" char="#" label="#"/>
+              <key group="alphanumeric" id="BC03" char="%" label="%"/>
+              <key group="alphanumeric" id="BC04" char="*" label="*"/>
+              <key group="alphanumeric" id="BC05" char="/" label="/"/>
+              <key group="alphanumeric" id="BC06" char="+" label="+"/>
+              <key group="alphanumeric" id="BC07" char="-" label="-"/>
+              <key group="alphanumeric" id="BC08" char="(" label="("/>
+              <key group="alphanumeric" id="BC09" char=")" label=")"/>
+              <key group="alphanumeric" id="BC10" char="'" label="'"/>
+              <!-- row 2 -->
+              <!-- <key group="bottomrow" id="ESC"/> -->
+              <key group="shifts" id="LFSH.like_rtrn"/>
+              <key group="alphanumeric" id="BB01" char=";" label=";"/>
+              <key group="alphanumeric" id="BB02" char="@" label="@"/>
+              <key group="alphanumeric" id="BB03" char="=" label="="/>
+              <key group="alphanumeric" id="BB04" char="?" label="?"/>
+              <key group="alphanumeric" id="BB05" char="!" label="!"/>
+              <key group="alphanumeric" id="BB06" char=":" label=":"/>
+              <key group="alphanumeric" id="BB07" char="&quot;" label="&quot;"/>
+              <key group="bottomrow" id="BKSP" unlatch_layer="false"/>
+            </panel>
+          </panel>
+          <panel>
+            <panel filename="kiosk-osk-alpha.svg">
+              <!-- row 1 of the layer -->
+              <key group="bottomrow" id="layer1.like_rtrn" label="12!@"/>
+              <key group="alphanumeric" id="AA01" char="," label="," unlatch_layer="false"/>
+              <key group="bottomrow" id="SPCE"/>
+              <key group="alphanumeric" id="AA02" char="." label="." unlatch_layer="false"/>
+              <key group="bottomrow" id="RTRN"/>
+            </panel>
+          </panel>
+        </box>
+        <!-- sidebar -->
+        <panel id="sidebar" filename="kiosk-osk-sidebar.svg">
+          <box compact="true" orientation="vertical">
+            <key group="bottomrow" id="hide"/>
+            <key group="bottomrow" id="move"/>
+          </box>
+        </panel>
+      </box>
+    </panel>
+  </box>
+</keyboard>
