@@ -1110,7 +1110,7 @@ function cmd_print_version() {
 }
 
 function cmd_print_help() {
-  echo "Usage: $(basename ""$0"") [OPTION] [-y|--yes]"
+  echo "Usage: $SCRIPT_NAME [OPTION] [-y|--yes]"
   echo "$SCRIPT_TITLE v$SCRIPT_VERSION"
   echo "Adminmode switch hotkey: Shift+End"
   echo " "
