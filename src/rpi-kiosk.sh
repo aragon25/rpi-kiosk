@@ -7,7 +7,7 @@
 
 #get some variables
 SCRIPT_TITLE="Raspberry Pi Kiosk (rpi-kiosk)"
-SCRIPT_VERSION="1.46"
+SCRIPT_VERSION="1.47"
 SCRIPT_PATH="$(readlink -f "$0")"
 SCRIPT_NAME="$(basename "$SCRIPT_PATH")"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
@@ -23,8 +23,8 @@ EXITCODE=0
 #!!!RUN RESTRICTIONS!!!
 #only for raspberry pi (rpi5|rpi4|rpi3|all) can combined!
 raspi="rpi4|rpi3"
-#only for Raspbian OS (bookworm|bullseye|all) can combined!
-rasos="bookworm|bullseye"
+#only for Raspbian OS (trixie|bookworm|bullseye|all) can combined!
+rasos="trixie|bookworm|bullseye"
 #only for cpu architecture (i386|armhf|amd64|arm64) can combined!
 cpuarch=""
 #only for os architecture (32|64) can NOT combined!
@@ -126,6 +126,7 @@ function do_check_start() {
     [[ "$rasos_v" =~ "Raspbian" ]] && [[ "$rasos" =~ "all" ]] && rasos_res="true"
     [[ "$rasos_v" =~ "Raspbian" ]] && [[ "$rasos_v" =~ "bullseye" ]] && [[ "$rasos" =~ "bullseye" ]] && rasos_res="true"
     [[ "$rasos_v" =~ "Raspbian" ]] && [[ "$rasos_v" =~ "bookworm" ]] && [[ "$rasos" =~ "bookworm" ]] && rasos_res="true"
+    [[ "$rasos_v" =~ "Raspbian" ]] && [[ "$rasos_v" =~ "trixie" ]] && [[ "$rasos" =~ "trixie" ]] && rasos_res="true"
     if [ "$rasos_res" == "false" ]; then
       echo "You need to run Raspbian OS ($rasos) to run this script! Can not continue with this script!"
       exit 1

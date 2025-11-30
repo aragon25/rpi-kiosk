@@ -39,8 +39,8 @@ something is missing.
 Build or download the release package and install on the device:
 
 ```bash
-wget https://github.com/aragon25/rpi-kiosk/releases/download/v1.46-2/rpi-kiosk_1.46-2_all.deb
-sudo apt install ./rpi-kiosk_1.46-2_all.deb
+wget https://github.com/aragon25/rpi-kiosk/releases/download/v1.47-1/rpi-kiosk_1.47-1_all.deb
+sudo apt install ./rpi-kiosk_1.47-1_all.deb
 ```
 
 The package places scripts and supporting files into system locations; check
