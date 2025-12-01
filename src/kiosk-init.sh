@@ -175,10 +175,10 @@ get_xsession_user() {
   local test
   local result
   IFS=$'\n'
-  test=($(w -hs 2>/dev/null))
+  test=($(who 2>/dev/null))
   if [ "${#test[@]}" != "0" ]; then
     for entry in ${test[@]}; do
-      [[ "$entry" =~ " :0 " ]] && result="$(echo "$entry" | cut -d' ' -f1)"
+      [[ "$entry" =~ "(:0)" ]] && result="$(echo "$entry" | cut -d' ' -f1)"
     done
   fi
   [ "$result" != "" ] && printf -- "%s\n" "$result"

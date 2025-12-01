@@ -30,7 +30,7 @@ cpuarch=""
 #only for os architecture (32|64) can NOT combined!
 bsarch=""
 #this aptpaks need to be installed!
-aptpaks=( lightdm lightdm-gtk-greeter lightdm-autologin-greeter openbox xorg curl wmctrl feh numlockx xserver-xorg-video-dummy x11-xserver-utils )
+aptpaks=( lightdm lightdm-gtk-greeter lightdm-autologin-greeter openbox xorg curl wmctrl feh numlockx xserver-xorg-video-dummy x11-xserver-utils zenity )
 
 #check commands
 for i in "$@"
@@ -427,15 +427,15 @@ function start_lightdm() {
   systemctl restart display-manager >/dev/null 2>&1
 }
 
-function get_xsession_user() {
+get_xsession_user() {
   local entry
   local test
   local result
   IFS=$'\n'
-  test=($(w -hs 2>/dev/null))
+  test=($(who 2>/dev/null))
   if [ "${#test[@]}" != "0" ]; then
     for entry in ${test[@]}; do
-      [[ "$entry" =~ " :0 " ]] && result="$(echo "$entry" | cut -d' ' -f1)"
+      [[ "$entry" =~ "(:0)" ]] && result="$(echo "$entry" | cut -d' ' -f1)"
     done
   fi
   [ "$result" != "" ] && printf -- "%s\n" "$result"
@@ -543,7 +543,7 @@ function configure_system() {
   [ -e "$BASE_DIR/kiosk-osk/kiosk-osk-sidebar.svg" ] && ln -fs "$BASE_DIR/kiosk-osk/kiosk-osk-sidebar.svg" "/usr/share/onboard/layouts/kiosk-osk-sidebar.svg"
   [ -e "$BASE_DIR/kiosk-osk/kiosk-osk-symbols.svg" ] && ln -fs "$BASE_DIR/kiosk-osk/kiosk-osk-symbols.svg" "/usr/share/onboard/layouts/kiosk-osk-symbols.svg"
   
-  if ! grep -q "connected" /sys/class/drm/card0-*/status 2>/dev/null; then
+  if ! grep -q "connected" /sys/class/drm/card*-*/status 2>/dev/null; then
     mkdir -p "$(dirname "$xorg_conf")" >/dev/null 2>&1
     cat <<EOF | sudo tee "$xorg_conf" >/dev/null 2>&1
 Section "Monitor"
