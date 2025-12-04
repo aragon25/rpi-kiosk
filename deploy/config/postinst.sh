@@ -1,8 +1,6 @@
 #!/bin/bash
 function undo_changes(){
   /usr/bin/rpi-kiosk --install_remove >/dev/null 2>&1
-  rm -rf "/usr/lib/rpi-kiosk" >/dev/null 2>&1
-  rm -f "/etc/rpi-kiosk/kiosk.conf" >/dev/null 2>&1
   exit 1
 }
 echo "Configure lightdm ..."
