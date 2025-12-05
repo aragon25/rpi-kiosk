@@ -17,6 +17,7 @@ STATE_FILE="$STATIC_DIR/rpi-kiosk_states"
 PID_FILE="/run/rpi-kiosk-service.pid"
 COM_FILE="/run/rpi-kiosk-com"
 BASE_DIR="/usr/lib/rpi-kiosk"
+NOSHELL_FILE="/usr/lib/rpi-kiosk/noshell"
 KHOME_DIR="$BASE_DIR/kiosk-home"
 EXITCODE=0
 
@@ -817,7 +818,7 @@ function create_kioskuser(){
     return
   fi
   if [ "$username" == "" ]; then
-    useradd --no-create-home --home-dir "$KHOME_DIR" --shell "/usr/sbin/nologin" --uid 2001 "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
+    useradd --no-create-home --home-dir "$KHOME_DIR" --shell "$NOSHELL_FILE" --uid 2001 "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
     IFS=$','
     if [ "$CONFIG_KIOSK_USERGROUPS" != "false" ]; then
       for group in ${CONFIG_KIOSK_USERGROUPS[@]}; do
@@ -836,9 +837,9 @@ function create_kioskuser(){
     killall -u "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
     usermod --home "${KHOME_DIR}" "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
   fi
-  if [ "$shell" != "/usr/sbin/nologin" ]; then
+  if [ "$shell" != "$NOSHELL_FILE" ]; then
     killall -u "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
-    usermod --shell "/usr/sbin/nologin" "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
+    usermod --shell "$NOSHELL_FILE" "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
   fi
   usermod --groups "" "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
   IFS=$','
@@ -940,11 +941,16 @@ function cmd_install() {
     prepare_kiosk >/dev/null 2>&1
     delete_kioskuser >/dev/null 2>&1
     rm -f "$CONFIG_FILE" >/dev/null 2>&1
+    rm -f "$NOSHELL_FILE" >/dev/null 2>&1
     [ "$CMD" == "install_remove" ] && config_delete_statfile >/dev/null 2>&1
   fi
   if [ "$CMD" == "install_start" ]; then
-    echo "Create kiosk service..."
+    echo "Setting up kiosk..."
+    local nologin_path="$(which nologin 2>/dev/null)"
+    [ "$nologin_path" == "" ] && "$(which false 2>/dev/null)"
     create_kiosk_service >/dev/null 2>&1
+    mkdir -p "$(dirname "$NOSHELL_FILE")" >/dev/null 2>&1
+    cp -f "$nologin_path" "$NOSHELL_FILE" >/dev/null 2>&1
   fi
 }
 
