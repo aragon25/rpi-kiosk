@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - usage text in help.
+- kill kiosk processes softer
 
 ## [1.46-2] - 2025-11-24
 

@@ -797,10 +797,21 @@ EOF
   [[ ! "$service_status" =~ "__ACTIVE__" ]] && systemctl start rpi-kiosk >/dev/null 2>&1
 }
 
+function kill_kiosk_processes() {
+  local username="$(getent passwd 2001 | cut -d: -f1)"
+  [[ -z "$username" ]] && return 0
+  pkill -TERM -u "$username" 2>/dev/null
+  for ((i=0; i<10; i++)); do
+    sleep 0.5
+    ! pgrep -u "$username" >/dev/null 2>&1 && return 0
+  done
+  pkill -KILL -u "$username" 2>/dev/null
+}
+
 function delete_kioskuser(){
   local username="$(getent passwd 2001 | cut -d: -f1)"
   if [ "$username" != "" ]; then
-    pkill -KILL -u "$username" >/dev/null 2>&1
+    kill_kiosk_processes
     userdel -f "$username" >/dev/null 2>&1
     deluser --group "$username" >/dev/null 2>&1
   fi
@@ -829,16 +840,16 @@ function create_kioskuser(){
     return
   fi
   if [ "$username" != "$CONFIG_KIOSK_USERNAME" ]; then
-    killall -u "$username" >/dev/null 2>&1
+    kill_kiosk_processes
     usermod --login "$CONFIG_KIOSK_USERNAME" "$username" >/dev/null 2>&1
     groupmod --new-name "$CONFIG_KIOSK_USERNAME" "$username" >/dev/null 2>&1
   fi
   if [ "$homedir" != "${KHOME_DIR}" ]; then
-    killall -u "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
+    kill_kiosk_processes
     usermod --home "${KHOME_DIR}" "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
   fi
   if [ "$shell" != "$NOSHELL_FILE" ]; then
-    killall -u "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
+    kill_kiosk_processes
     usermod --shell "$NOSHELL_FILE" "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
   fi
   usermod --groups "" "$CONFIG_KIOSK_USERNAME" >/dev/null 2>&1
@@ -859,7 +870,7 @@ function prepare_kiosk() {
      systemctl stop display-manager >/dev/null 2>&1
     fi
   fi
-  killall -KILL -u "$(getent passwd 2001 | cut -d: -f1)" >/dev/null 2>&1
+  kill_kiosk_processes
   local createuser="$(create_kioskuser)"
   if [ "$createuser" != "" ]; then
     echo "Could not create kioskuser! Errorcode: $createuser"
