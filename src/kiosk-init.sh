@@ -139,6 +139,7 @@ config_read_all(){
   CONFIG_BROWSER_KIOSK_MAXIMIZED="$(get_valid_bool $CONFIG_BROWSER_KIOSK_MAXIMIZED)"
   [ "$CONFIG_BROWSER_KIOSK_PANEL_POSITION" != "top-left" ] && [ "$CONFIG_BROWSER_KIOSK_PANEL_POSITION" != "top-right" ] && \
   [ "$CONFIG_BROWSER_KIOSK_PANEL_POSITION" != "bottom-left" ] && [ "$CONFIG_BROWSER_KIOSK_PANEL_POSITION" != "bottom-right" ] && CONFIG_BROWSER_KIOSK_PANEL_POSITION="false"
+  #[ -z "$CONFIG_BROWSER_KIOSK_PANEL_TITLE" ] && CONFIG_BROWSER_KIOSK_PANEL_TITLE="RPI-KIOSK"
   CONFIG_BROWSER_KIOSK_PANEL_HOME="$(get_valid_bool $CONFIG_BROWSER_KIOSK_PANEL_HOME)"
   CONFIG_BROWSER_KIOSK_PANEL_CLOSE="$(get_valid_bool $CONFIG_BROWSER_KIOSK_PANEL_CLOSE)"
   CONFIG_BROWSER_ADMIN_APPDATA="${CONFIG_BROWSER_ADMIN_APPDATA%/}"
@@ -147,6 +148,7 @@ config_read_all(){
   CONFIG_BROWSER_ADMIN_MAXIMIZED="$(get_valid_bool $CONFIG_BROWSER_ADMIN_MAXIMIZED)"
   [ "$CONFIG_BROWSER_ADMIN_PANEL_POSITION" != "top-left" ] && [ "$CONFIG_BROWSER_ADMIN_PANEL_POSITION" != "top-right" ] && \
   [ "$CONFIG_BROWSER_ADMIN_PANEL_POSITION" != "bottom-left" ] && [ "$CONFIG_BROWSER_ADMIN_PANEL_POSITION" != "bottom-right" ] && CONFIG_BROWSER_ADMIN_PANEL_POSITION="false"
+  #[ -z "$CONFIG_BROWSER_ADMIN_PANEL_TITLE" ] && CONFIG_BROWSER_ADMIN_PANEL_TITLE="RPI-KIOSK"
   CONFIG_BROWSER_ADMIN_PANEL_HOME="$(get_valid_bool $CONFIG_BROWSER_ADMIN_PANEL_HOME)"
   CONFIG_BROWSER_ADMIN_PANEL_CLOSE="$(get_valid_bool $CONFIG_BROWSER_ADMIN_PANEL_CLOSE)"
   CONFIG_ADMIN_ALLOW="$(get_valid_bool $CONFIG_ADMIN_ALLOW)"
@@ -670,7 +672,6 @@ exec_main() {
   if ! ps -p $PID_MAIN >/dev/null 2>&1; then
     kill_old_main
     if check_commands_main; then
-      configure_main
       exec_type=$(is_exec_or_website "${CONFIG_APPSTART#file://}")
       if [ "${exec_type}" == "EXEC" ]; then
         "$CONFIG_APPSTART" &
@@ -750,10 +751,12 @@ sudo_cmd() {
 }
 
 cmd_service() {
+  local conf_active="false"
   local app_active="false"
   local osk_active="false"
   local panel_active="false"
-  [ "$USER_ID" == "2001" ] && [ "$USER_NAME" == "$CONFIG_KIOSK_USERNAME" ] && app_active="true"
+  [ "$USER_ID" == "2001" ] && [ "$USER_NAME" == "$CONFIG_KIOSK_USERNAME" ] && app_active="true" && conf_active="true"
+  [ "$USER_NAME" == "$CONFIG_ADMIN_LOGINUSER" ] && conf_active="true"
   [ "$USER_NAME" == "$CONFIG_ADMIN_LOGINUSER" ] && [ "$CONFIG_ADMIN_APPSTART" != "false" ] && CONFIG_APPSTART="$CONFIG_ADMIN_APPSTART" && app_active="true"
   [ "$USER_ID" == "2001" ] && [ "$USER_NAME" == "$CONFIG_KIOSK_USERNAME" ] && [ "$CONFIG_OSK_KIOSK" == "true" ] && osk_active="true"
   [ "$USER_NAME" == "$CONFIG_ADMIN_LOGINUSER" ] && [ "$CONFIG_OSK_ADMIN" == "true" ] && osk_active="true"
@@ -765,8 +768,9 @@ cmd_service() {
   ! check_commands_osk && osk_active="false"
   ! check_files_osk && osk_active="false"
   ! check_commands_panel && panel_active="false"
-  [ "$panel_active" == "true" ] && exec_panel
+  [ "$conf_active" == "true" ] && configure_main
   [ "$app_active" == "true" ] && exec_main
+  [ "$panel_active" == "true" ] && exec_panel
   [ "$osk_active" == "true" ] && exec_osk
   trap 'SERVICE_RUNNING="false"; kill_old_all' EXIT INT TERM
   while [ "$SERVICE_RUNNING" == "true" ]; do
