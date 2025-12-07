@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - usage text in help.
 - kill kiosk processes softer
+- configuring admin user by kiosk-init even if no app is declared
 
 ## [1.46-2] - 2025-11-24
 
