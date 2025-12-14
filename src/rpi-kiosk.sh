@@ -428,6 +428,21 @@ function start_lightdm() {
   systemctl restart display-manager >/dev/null 2>&1
 }
 
+get_console_user() {
+  local entry
+  local test
+  local result
+  IFS=$'\n'
+  test=($(who 2>/dev/null))
+  if [ "${#test[@]}" != "0" ]; then
+    for entry in ${test[@]}; do
+      [[ "$entry" =~ "tty" ]] && result="$(echo "$entry" | cut -d' ' -f1)"
+    done
+  fi
+  [ "$result" != "" ] && printf -- "%s\n" "$result"
+  unset IFS
+}
+
 get_xsession_user() {
   local entry
   local test
@@ -768,6 +783,7 @@ function delete_kiosk_service() {
 
 function create_kiosk_service() {
   local service_status="$(check_service rpi-kiosk.service)"
+  local user_console="$(get_console_user)"
   if [[ "$service_status" =~ "__NOTFOUND__" ]]; then
     cat <<EOF | sudo tee /lib/systemd/system/rpi-kiosk.service >/dev/null 2>&1
 [Unit]
@@ -791,7 +807,7 @@ EOF
     systemctl daemon-reload >/dev/null 2>&1
   fi
   [ "$(systemctl get-default)" != "graphical.target" ] && systemctl set-default graphical.target
-  [ "$(systemctl is-active graphical.target)" != "active" ] && systemctl start graphical.target
+  [ "$(systemctl is-active graphical.target)" != "active" ] && [ -z "$user_console" ] && systemctl start graphical.target
   service_status="$(check_service rpi-kiosk.service)"
   [[ "$service_status" =~ "__DISABLED__" ]] && systemctl enable rpi-kiosk >/dev/null 2>&1
   [[ ! "$service_status" =~ "__ACTIVE__" ]] && systemctl start rpi-kiosk >/dev/null 2>&1

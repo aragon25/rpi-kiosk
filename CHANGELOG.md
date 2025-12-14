@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - usage text in help.
 - kill kiosk processes softer
 - configuring admin user by kiosk-init even if no app is declared
+- prevent starting graphical target if installing from tty 
 
 ## [1.46-2] - 2025-11-24
 
